@@ -7,11 +7,16 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
+  console.log('connected!');
+
   socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+    console.log('chat message sent!', msg);
+    io.emit('new message', msg);
+
   });
+
 });
-var port = process.env.PORT || 3000
-http.listen(port, function(){
+
+http.listen(3000, function(){
   console.log('listening on *:3000');
 });

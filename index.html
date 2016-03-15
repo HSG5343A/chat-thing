@@ -1,4 +1,4 @@
-<!doctype html>
+  <!doctype html>
 <html>
   <head>
     <title>Socket.IO chat</title>
@@ -22,12 +22,20 @@
     <script src="//code.jquery.com/jquery-1.11.1.js"></script>
     <script>
       var socket = io();
+
       $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
+        // dont allow people to send empty messages
+        var message = $('#m').val();
+        if(message == '') {
+          alert('Please enter some text');
+          return false;
+        }
+        socket.emit('chat message', message);
         $('#m').val('');
         return false;
       });
-      socket.on('chat message', function(msg){
+
+      socket.on('new message', function(msg){
         $('#messages').append($('<li>').text(msg));
       });
     </script>
